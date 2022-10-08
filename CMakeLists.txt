@@ -10,9 +10,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSON_C REQUIRED json-c)
 
-add_library( ${PROJECT_NAME} STATIC src/JSON.cpp )
+add_library( ${PROJECT_NAME} STATIC JSON.cpp )
 
-set( MINIJSON_PUBLIC_HEADERS src/JSON.hpp )
+set( MINIJSON_PUBLIC_HEADERS JSON.hpp )
 
 # Directories are created with 0755 permissions
 set(CMAKE_INSTALL_DEFAULT_DIRECTORY_PERMISSIONS
