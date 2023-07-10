@@ -1,16 +1,15 @@
-add_library(${LIBRARY_NAME} SHARED ${SOURCES})
+add_library(${LIBRARY_NAME} ${LIB_TYPE} ${SOURCES})
 add_library(${PROJECT_NAME}::${LIBRARY_NAME} 
   ALIAS ${LIBRARY_NAME})
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSON_C REQUIRED json-c)
 
-set_target_properties(${LIBRARY_NAME} PROPERTIES LINK_FLAGS          "-Wl,-rpath,${CMAKE_INSTALL_PREFIX}/lib" )
-set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE     CXX                                      )
-set_target_properties(${LIBRARY_NAME} PROPERTIES PUBLIC_HEADER       "${HEADERS_PUBLIC}"                      )
-set_target_properties(${LIBRARY_NAME} PROPERTIES OUTPUT_NAME         "${LIBRARY_NAME}"                        )
-set_target_properties(${LIBRARY_NAME} PROPERTIES SUFFIX              ".so"                                    )
-set_target_properties(${LIBRARY_NAME} PROPERTIES PREFIX              "lib"                                    )
+set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE     CXX                 )
+set_target_properties(${LIBRARY_NAME} PROPERTIES PUBLIC_HEADER       "${HEADERS_PUBLIC}" )
+set_target_properties(${LIBRARY_NAME} PROPERTIES OUTPUT_NAME         "${LIBRARY_NAME}"   )
+set_target_properties(${LIBRARY_NAME} PROPERTIES SUFFIX              "${LIB_SUFFIX}"     )
+set_target_properties(${LIBRARY_NAME} PROPERTIES PREFIX              "lib"               )
 
 target_compile_definitions(
     ${LIBRARY_NAME} 

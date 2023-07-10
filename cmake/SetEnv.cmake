@@ -1,5 +1,7 @@
-string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
-string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
+###
+# Largely inspired from
+# https://github.com/pablospe/cmake-example-library/blob/master/cmake/SetEnv.cmake
+###
 
 set(LIBRARY_NAME    "miniJSON")
 set(LIBRARY_FOLDER  "miniJSON")
@@ -11,8 +13,29 @@ endif()
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
              "Release" "Debug" "MinSizeRel" "RelWithDebInfo")
 
-message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-message(STATUS "CMAKE_GENERATOR : ${CMAKE_GENERATOR}" )
+option(BUILD_SHARED_LIBS "Build ${LIBRARY_NAME} as a shared library." ON)
+
+message(STATUS "CMAKE_BUILD_TYPE : ${CMAKE_BUILD_TYPE}" )
+message(STATUS "CMAKE_GENERATOR  : ${CMAKE_GENERATOR}"  )
+message(STATUS "BUILD_SHARED_LIB : ${BUILD_SHARED_LIBS}")
+
+if ( ${BUILD_SHARED_LIBS} )
+  set(LIB_SUFFIX                        ".so"                         )
+  set(CMAKE_SKIP_BUILD_RPATH            FALSE                         )
+  set(CMAKE_BUILD_WITH_INSTALL_RPATH    FALSE                         )
+  set(CMAKE_INSTALL_RPATH               "${CMAKE_INSTALL_PREFIX}/lib" )
+  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE                          )
+  set(LIB_TYPE                          SHARED                        )
+
+  list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
+  if("${isSystemDir}" STREQUAL "-1")
+      set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+  endif()
+else()
+  set(LIB_SUFFIX ".a"   )
+  set(LIB_TYPE   STATIC )
+
+endif()
 
 set(GENERATED_HEADERS_DIR
   "${CMAKE_CURRENT_BINARY_DIR}/generated_headers"
@@ -26,12 +49,11 @@ configure_file(
 
 include(GNUInstallDirs)
 
-set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
-
-set(GENERATED_DIR       "${CMAKE_CURRENT_BINARY_DIR}/generated")
-set(VERSION_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
-set(PROJECT_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}Config.cmake")
-set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+set(CONFIG_INSTALL_DIR  "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"       )
+set(GENERATED_DIR       "${CMAKE_CURRENT_BINARY_DIR}/generated"               )
+set(VERSION_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake" )
+set(PROJECT_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}Config.cmake"        )
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets"                              )
 
 include(CMakePackageConfigHelpers)
 
