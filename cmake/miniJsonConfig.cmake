@@ -16,11 +16,6 @@ target_compile_definitions(
     PUBLIC
         "${PROJECT_NAME_UPPERCASE}_DEBUG=$<CONFIG:Debug>")
 
-target_link_directories(${LIBRARY_NAME}
-    PUBLIC
-        ${CMAKE_INSTALL_PREFIX}/lib
-)
-
 target_include_directories(
     ${LIBRARY_NAME} 
     PUBLIC
@@ -62,3 +57,14 @@ install(
   DESTINATION "${CONFIG_INSTALL_DIR}"
   NAMESPACE   "${PROJECT_NAME}::"
 )
+
+set(prefix      ${CMAKE_INSTALL_PREFIX})
+set(exec_prefix ${CMAKE_INSTALL_PREFIX})
+set(libdir      ${CMAKE_INSTALL_LIBDIR})
+set(includedir  ${CMAKE_INSTALL_INCLUDEDIR})
+set(LIBS        "-l${JSON_C_LIBRARIES}")
+
+configure_file("${PROJECT_SOURCE_DIR}/libminijson.pc.in"
+               "${GENERATED_DIR}/libminijson.pc" @ONLY)
+install(FILES "${GENERATED_DIR}/libminijson.pc"
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
