@@ -5,6 +5,7 @@
 
 set(LIBRARY_NAME    "miniJSON")
 set(LIBRARY_FOLDER  "miniJSON")
+set(EXAMPLE_FOLDER  "${CMAKE_CURRENT_SOURCE_DIR}/example")
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
@@ -13,11 +14,13 @@ endif()
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
              "Release" "Debug" "MinSizeRel" "RelWithDebInfo")
 
-option(BUILD_SHARED_LIBS "Build ${LIBRARY_NAME} as a shared library." ON)
+option(BUILD_SHARED_LIBS "Build ${LIBRARY_NAME} as a shared library." ON )
+option(BUILD_EXAMPLE     "Build ${LIBRARY_NAME} usage example."       OFF)
 
 message(STATUS "CMAKE_BUILD_TYPE : ${CMAKE_BUILD_TYPE}" )
 message(STATUS "CMAKE_GENERATOR  : ${CMAKE_GENERATOR}"  )
 message(STATUS "BUILD_SHARED_LIB : ${BUILD_SHARED_LIBS}")
+message(STATUS "BUILD_EXAMPLE    : ${BUILD_EXAMPLE}"    )
 
 if ( ${BUILD_SHARED_LIBS} )
   set(LIB_SUFFIX                        ".so"                         )

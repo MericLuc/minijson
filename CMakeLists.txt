@@ -7,3 +7,4 @@ set(miniJSON_BRIEF  "Lightweight cpp wrapper around libJSON-C")
 include(${PROJECT_SOURCE_DIR}/cmake/SetEnv.cmake)
 
 add_subdirectory(${LIBRARY_FOLDER})
+add_subdirectory(${EXAMPLE_FOLDER})
