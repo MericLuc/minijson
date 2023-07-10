@@ -10,7 +10,7 @@ It wraps [libjson-c](https://github.com/json-c/json-c) and is therefore easily e
 
 - `CMakeLists.txt`
 
-```
+```cmake
 cmake_minimum_required(VERSION 3.11)
 
 project(miniJSON_example)
@@ -27,7 +27,7 @@ target_link_libraries(${PROJECT_NAME} miniJSON)
 
 - `main.cpp`
 
-```
+```c++
 #include <miniJSON/JSON.h>
 #include <iostream>
 
@@ -60,7 +60,7 @@ int main(/*int argc, char* argv[]*/) {
 
 - Install
 
-```
+```bash
 cmake [-S ${path/to/src}] [-DCMAKE_NSTALL_PREFIX=${install/prefix}] .
 make
 make install
@@ -68,7 +68,7 @@ make install
 
 - Uninstall
 
-```
+```bash
 make uninstall
 ```
 
